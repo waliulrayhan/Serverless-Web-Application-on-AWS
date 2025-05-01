@@ -1,40 +1,239 @@
+:root {
+	--paper-color: #fff5e6;
+	--paper-shadow: #d4c4a3;
+	--text-color: #333;
+	--accent-color: #8b4513;
+}
+
+body {
+	font-family: 'Patrick Hand', cursive;
+	background-color: #f5f5f5;
+	color: var(--text-color);
+	margin: 0;
+	padding: 20px;
+	background-image: url('https://www.transparenttextures.com/patterns/paper.png');
+}
+
 header {
-	background-color: #333;
-	color: #fff;
-	padding: 10px;
+	text-align: center;
+	margin-bottom: 30px;
 }
 
 h1 {
+	font-family: 'Dancing Script', cursive;
+	font-size: 3em;
+	color: var(--accent-color);
 	margin: 0;
+	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-form {
-	display: flex;
-	flex-direction: column;
+.tagline {
+	font-family: 'Patrick Hand', cursive;
+	font-size: 1.2em;
+	color: #666;
+}
+
+.letter-container {
+	max-width: 800px;
+	margin: 0 auto;
+	perspective: 1000px;
+}
+
+.letter-paper {
+	background-color: var(--paper-color);
+	padding: 40px;
+	border-radius: 5px;
+	box-shadow: 0 0 10px var(--paper-shadow);
+	position: relative;
+	transform-style: preserve-3d;
+	transition: transform 0.5s ease;
+}
+
+.letter-paper::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+	opacity: 0.1;
+	pointer-events: none;
+}
+
+.form-group {
+	margin-bottom: 20px;
 }
 
 label {
-	margin-bottom: 10px;
+	display: block;
+	margin-bottom: 5px;
+	font-weight: bold;
 }
 
-input[type="text"] {
-	padding: 5px;
-	margin-bottom: 10px;
-	border-radius: 5px;
-	border: none;
-	box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+input[type="text"],
+textarea {
+	width: 100%;
+	padding: 10px;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	background-color: rgba(255, 255, 255, 0.8);
+	font-family: 'Patrick Hand', cursive;
+	font-size: 1.1em;
 }
 
-button {
-	padding: 5px 10px;
-	background-color: #333;
-	color: #fff;
-	border: none;
-	border-radius: 5px;
+textarea {
+	min-height: 200px;
+	resize: vertical;
+}
+
+.form-options {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 20px;
+	margin-bottom: 20px;
+}
+
+.checkbox-label {
+	display: flex;
+	align-items: center;
+	gap: 5px;
 	cursor: pointer;
 }
 
-#greeting {
+.expiry-option {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+select {
+	padding: 5px;
+	border-radius: 4px;
+	font-family: 'Patrick Hand', cursive;
+}
+
+.button-group {
+	display: flex;
+	gap: 10px;
+	justify-content: flex-end;
+}
+
+button {
+	padding: 10px 20px;
+	background-color: var(--accent-color);
+	color: white;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	font-family: 'Patrick Hand', cursive;
+	font-size: 1.1em;
+	transition: background-color 0.3s ease;
+}
+
+button:hover {
+	background-color: #6b3610;
+}
+
+.modal {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 1000;
+}
+
+.modal-content {
+	position: relative;
+	background-color: white;
+	margin: 10% auto;
+	padding: 20px;
+	width: 80%;
+	max-width: 800px;
+	border-radius: 5px;
+}
+
+.close {
+	position: absolute;
+	right: 20px;
+	top: 10px;
+	font-size: 28px;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+@keyframes letterSlide {
+	from {
+		transform: translateY(-100%);
+		opacity: 0;
+	}
+	to {
+		transform: translateY(0);
+		opacity: 1;
+	}
+}
+
+.letter-paper {
+	animation: letterSlide 0.5s ease-out;
+}
+
+.letter-date {
+	text-align: right;
+	color: #666;
+	margin-bottom: 20px;
+}
+
+.letter-to {
+	font-size: 1.2em;
+	margin-bottom: 30px;
+}
+
+.letter-body {
+	font-family: 'Dancing Script', cursive;
+	font-size: 1.4em;
+	line-height: 1.6;
+	margin: 30px 0;
+	min-height: 200px;
+}
+
+.letter-from {
+	text-align: right;
+	font-family: 'Dancing Script', cursive;
+	font-size: 1.3em;
+	margin-top: 30px;
+}
+
+.letter-views {
+	color: #666;
+	font-size: 0.9em;
+	text-align: right;
 	margin-top: 20px;
-	font-size: 1.2rem;
+}
+
+.loading {
+	text-align: center;
+	color: #666;
+	font-style: italic;
+}
+
+.error {
+	color: #d43f3a;
+	text-align: center;
+	margin: 20px 0;
+}
+
+.error + p {
+	text-align: center;
+}
+
+.error + p a {
+	color: var(--accent-color);
+	text-decoration: none;
+}
+
+.error + p a:hover {
+	text-decoration: underline;
 }

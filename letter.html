@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Digital Chitthi - View Letter</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>Digital Chitthi</h1>
+        <p class="tagline">Send Heartfelt Letters in the Digital Age</p>
+    </header>
+    <main>
+        <div class="letter-container">
+            <div class="letter-paper" id="letter-content">
+                <p class="loading">Loading letter...</p>
+            </div>
+        </div>
+    </main>
+    <script>
+        async function loadLetter() {
+            try {
+                // Get letter ID from URL
+                const urlParts = window.location.pathname.split('/');
+                const letterId = urlParts[urlParts.length - 1];
+
+                // Fetch letter data
+                const response = await fetch(`https://lb2rkxd5c2.execute-api.us-east-1.amazonaws.com/letter/${letterId}`, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    const letter = data.letter;
+                    const letterContent = document.getElementById('letter-content');
+                    letterContent.innerHTML = `
+                        <p class="letter-date">${new Date(letter.created_at).toLocaleDateString()}</p>
+                        <p class="letter-to">Dear ${letter.receiver},</p>
+                        <div class="letter-body">${letter.content.replace(/\n/g, '<br>')}</div>
+                        <p class="letter-from">From, ${letter.sender}</p>
+                        <p class="letter-views">Views: ${letter.views}</p>
+                    `;
+                } else {
+                    throw new Error(data.error || 'Failed to load letter');
+                }
+            } catch (error) {
+                document.getElementById('letter-content').innerHTML = `
+                    <p class="error">Error loading letter: ${error.message}</p>
+                    <p><a href="/">Back to Home</a></p>
+                `;
+            }
+        }
+
+        // Load letter when page loads
+        loadLetter();
+    </script>
+</body>
+</html> 
