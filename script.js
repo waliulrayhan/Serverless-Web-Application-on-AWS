@@ -1,3 +1,7 @@
+const config = {
+	apiUrl: 'https://rub3fcpd3p.us-east-1.awsapprunner.com'
+};
+
 document.addEventListener('DOMContentLoaded', () => {
 	const form = document.getElementById('letter-form');
 	const previewBtn = document.getElementById('preview-btn');
@@ -62,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			sendBtn.textContent = 'Sending...';
 
 			// Call Lambda function to save the letter
-			const response = await fetch('https://lb2rkxd5c2.execute-api.us-east-1.amazonaws.com/letter', {
+			const response = await fetch(`${config.apiUrl}/letter`, {
 				method: 'POST',
 				mode: 'cors',
 				credentials: 'omit',
